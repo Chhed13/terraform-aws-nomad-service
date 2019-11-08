@@ -1,0 +1,69 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `AWS_SECRET_KEY`}}",
+    "version": "0.1.0",
+    "name": "myservice_amazon_linux_2"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "us-east-1",
+      "source_ami_filter": {
+        "filters": {
+          "name": "amzn2-ami-hvm-2.0.*-x86_64-gp2"
+        },
+        "owners": ["amazon"],
+        "most_recent": true
+      },
+      "instance_type": "t3.micro",
+      "ssh_username": "ec2-user",
+      "ena_support": true,
+      "ami_name": "{{user `name`}}_{{timestamp}}",
+      "ami_description": "{{user `name`}} AMI"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo yum update -y",
+        "sudo yum install python3  -y",
+        "sudo mkdir -p /opt/bootstrap",
+        "sudo mkdir -p /opt/myservice",
+        "sudo chown ec2-user:ec2-user /opt/bootstrap",
+        "sudo chown ec2-user:ec2-user /opt/myservice",
+        "mkdir -p /opt/bootstrap/1",
+        "mkdir -p /opt/bootstrap/2"
+      ]
+    },
+    {
+      "type": "shell",
+      "script": "src/consul_install.sh"
+    },
+    {
+      "type": "file",
+      "source": "src/consul_update.sh",
+      "destination": "/opt/bootstrap/1/consul_update.sh"
+    },
+    {
+      "type": "file",
+      "source": "src/run.py",
+      "destination": "/opt/myservice/run.py"
+    },
+    {
+      "type": "shell",
+      "environment_vars": [
+        "VERSION={{user `version`}}"
+      ],
+      "script": "src/myservice_install.sh"
+    },
+    {
+      "type": "file",
+      "source": "src/myservice_update.sh",
+      "destination": "/opt/bootstrap/2/myservice_update.sh"
+    }
+  ]
+}
