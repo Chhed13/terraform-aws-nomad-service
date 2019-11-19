@@ -30,13 +30,13 @@ script will triggered on start of this module. Just pass the env variables
 | short_name                    |  bool  |           "nom"              | Host middle name. Better not touch it                                                                                                |
 | use_acl                       |  bool  |           true               | Setup ACLs or not. Default true                                                                                                      |
 | nomad_version                 | string |           0.10.1             | Version of Nomad service to run.                                                                                                     |
-| nomad_join                    |  list  |             []               | If set - used in retry_join config. If not - relay on default behavour (aka Consul join)                                             |
-| enable_client                 |  bool  |            false             | For playground purposes only. Enable defaul client setting, to allow run basic jobs                                                  |
+| nomad_join                    |  list  |             []               | If set - used in retry_join config. If not - rely on default behaviour (aka Consul join)                                             |
+| enable_client                 |  bool  |            false             | For playground purposes only. Enable default client setting, to allow run basic jobs                                                  |
 | bootstrap_dir                 | string |             ""               | Path to directory with bootstrap scripts. Default is /opt/bootstrap                                                                  |
 | bootstrap_params              |  map   |             {}               | Map of bootstrap parameters needed for bootstrap scripts                                                                             |
 | bootstrap_custom_script       | string |             ""               | Allows fine tune start behavour (hot-fix, migrations etc.). Executes after all bootstrap scripts. Not recommended for permanent use. |
 | ami_owner                     | string |          "amazon"            | Owner of AMI to use. Account ID or alias                                                                                             |
-| ami_name                      | string | "amzn2-ami-hvm-*-x86_64-gp2" | Name of the AMI to run from. Good practice to have smth like {company_prefix}_{lower(var.full_name)}_{var.ami_version}               |
+| ami_name                      | string | "amzn2-ami-hvm-*-x86_64-gp2" | Name of the AMI to run from.                                                                                                         |
 | standalone                    |  bool  |            true              | true - up 1 node nomad, false - up 3 node nomad                                                                                      |
 | instance_type                 | string |                              | Requiered. Instance type according to AWS notation                                                                                   |
 | subnet_ids                    |  list  |                              | Requiered. Subnets where to put instances                                                                                            |
@@ -59,7 +59,7 @@ script will triggered on start of this module. Just pass the env variables
 ## Usage
 
 Watch [example](./examples/run.tf) for parametrization.
-No creation IAM policies inside. If you use Consul and relay on AWS Consul auto join provide at least to Describe Tags.
+No creation IAM policies inside. If you use Consul and rely on AWS Consul auto join provide at least to Describe Tags.
 
 ### Setup of ACL
 

@@ -1,10 +1,10 @@
 locals {
   full_name             = "Nomad"
   name                  = "${format("%0.1s%s", lower(var.env_name), var.short_name)}l"
-  count         = var.standalone ? 1 : 3
+  count                 = var.standalone ? 1 : 3
   default_bootstrap_dir = "/opt/bootstrap"
   cidr                  = length(var.security_groups_inbound_cidrs) == 0 ? [data.aws_vpc.vpc.cidr_block] : var.security_groups_inbound_cidrs
-  params          = join(" ", formatlist("%s='%s'", keys(var.bootstrap_params), values(var.bootstrap_params)))
+  params                = join(" ", formatlist("%s='%s'", keys(var.bootstrap_params), values(var.bootstrap_params)))
 
   tags = merge({
     Name = local.name,
@@ -21,6 +21,11 @@ locals {
     enabled = true
     bootstrap_expect = ${local.count}
     encrypt = "${random_id.encrypt_key.b64_std}"
+    %{ if length(var.nomad_join) > 0 }
+    server_join {
+      retry_join = ${jsonencode(var.nomad_join)}
+    }
+    %{ endif }
   }
   %{ if var.use_acl }
   acl {
@@ -124,9 +129,4 @@ data "template_file" "userdata" {
     nomad_install = base64encode(local.nomad_install)
     nomad_config  = base64encode(local.nomad_config)
   }
-}
-
-resource "local_file" "f" {
-  content = data.template_file.userdata.rendered
-  filename = "udata.yml"
 }

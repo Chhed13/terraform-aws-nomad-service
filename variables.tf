@@ -18,13 +18,13 @@ variable "nomad_version" {
 variable "nomad_join" {
   type        = list(string)
   default     = []
-  description = "If set - used in retry_join config. If not - relay on default behavour (aka Consul join)"
+  description = "If set - used in retry_join config. If not - rely on default behaviour (aka Consul join)"
 }
 
 variable "enable_client" {
   type        = bool
   default     = false
-  description = "For playground purposes only. Enable defaul client setting, to allow run basic jobs"
+  description = "For playground purposes only. Enable default client setting, to allow run basic jobs"
 }
 
 variable bootstrap_dir {
