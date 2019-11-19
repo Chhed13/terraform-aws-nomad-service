@@ -1,8 +1,3 @@
-output "encrypt_key" {
-  value     = random_id.encrypt_key.b64_std
-  sensitive = true
-}
-
 output "asg_name" {
   value = aws_autoscaling_group.asg.name
 }
