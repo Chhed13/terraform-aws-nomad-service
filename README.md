@@ -69,13 +69,12 @@ No creation IAM policies inside. If you use Consul and rely on AWS Consul auto j
 
 __Allways check the update on test cluster first. General config may become incompatible__
 
-### If some instance failing. AWS want your instance down
+* Change nomad_version to new or do any other needed actions. 
+* Make `terraform apply`. Nothing breaks here, don't afraid of recreation of Launch Configuration
+* Terminate one instance via AWS console or AWS CLI. Instance perform graceful leave procedure upon termination.
+* Wait new instance to up and running via ASG policy (usually it takes 1 minute to get up, up to 5 minute to trigger policy) - check in Nomad UI
+* Terminate next
 
-* Change `nomad_version` to new one and make apply. Nothing breaks here
-* Terminate one instance via AWS console or CLI
-* Wait new instance to up and running via ASG policy (usually it takes 1 minute to get up, up to 5 minute to trigger policy)
-* Insure in AWS console that your instance has 2 IP assigned - rear, but happen. If it was re-scheduled too fast ENI may not re-attach
-  * If not: terminate on more time
-* Rotate next
+### If some instance failing. AWS want your instance down
 
 * Just terminate it
