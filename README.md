@@ -58,8 +58,13 @@ script will triggered on start of this module. Just pass the env variables
 
 ## Usage
 
-Watch [example](./examples/run.tf) for parametrization.
+Watch [example](./examples) for parametrization.
 No creation IAM policies inside. If you use Consul and rely on AWS Consul auto join provide at least to Describe Tags.
+
+### Full example
+
+* `./nomad` - shows how to setup server and client part on top of Consul from your AMIs in one `terraform apply` and initialize ACL master token
+* `./nomad_acl` - how to setup other tokens, when you have only AWS and Nomad and no Vault secrets for it.
 
 ### Setup of ACL
 
