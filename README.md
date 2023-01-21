@@ -1,5 +1,6 @@
 # Run Nomad server cluster on AWS 
-![Nomad](https://www.nomadproject.io/assets/images/favicons/favicon-194x194-bb8de46a.png)
+[![Published to Terraform Module Registry](https://img.shields.io/badge/Published%20to%20Terraform%20Module%20Registry-0.1.2-blue.svg)](https://registry.terraform.io/modules/Chhed13/nomad-service/aws/0.1.2) 
+![Terraform Version](https://img.shields.io/badge/Terraform-0.12-green.svg)
 
 ## Description
 
